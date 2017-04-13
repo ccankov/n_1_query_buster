@@ -23,6 +23,9 @@ class House < ActiveRecord::Base
   end
 
   def better_seeds_query
-    # TODO: your code here
+    Seed.joins(:plant)
+        .joins('JOIN gardeners ON plants.gardener_id = gardeners.id')
+        .joins('JOIN houses ON gardeners.house_id = houses.id')
+        .where('houses.id = ?', id).load
   end
 end
